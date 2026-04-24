@@ -1,10 +1,10 @@
-import { readdir, readFile } from 'node:fs/promises';
-
 import { Command } from '@/lib/Command.ts';
-import { parseCommand } from '@/lib/corpus.ts';
+import { getCommands } from '@/lib/corpus.ts';
 import { installGeminiCommand } from '@/lib/gemini.ts';
 
 export default class InstallCommandsCommand extends Command {
+    public override description = 'Install Agent commands';
+
     public override async run(): Promise<void> {
         await this.loading(
             {
@@ -16,15 +16,10 @@ export default class InstallCommandsCommand extends Command {
     }
 
     private async installCommands(): Promise<void> {
-        const commandsDir = new URL('../../corpus/commands/', import.meta.url);
-        const files = await readdir(commandsDir);
-        const commands = files.map((file) => file.slice(0, -'.md'.length));
+        const commands = await getCommands();
 
         for (const command of commands) {
-            const commandPath = new URL(`${command}.md`, commandsDir);
-            const corpusCommand = parseCommand(command, await readFile(commandPath, 'utf8'));
-
-            await installGeminiCommand(corpusCommand);
+            await installGeminiCommand(command);
         }
     }
 }

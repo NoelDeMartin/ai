@@ -3,11 +3,17 @@ import { isTesting } from '@noeldemartin/utils';
 import type { CAC } from 'cac';
 
 export abstract class Command {
-    register(cli: CAC, name: string) {
-        cli.command(name).action(() => this.run());
-    }
+    public description?: string;
 
     public abstract run(): Promise<void>;
+
+    public register(cli: CAC, name: string) {
+        cli.command(name, this.description).action(() => this.run());
+    }
+
+    protected print(text: string): void {
+        console.log(text);
+    }
 
     protected async loading(
         messages: { loading: string; done: string },

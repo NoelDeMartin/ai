@@ -11,6 +11,7 @@ priority: 10
     - Functions and variable names should be self-descriptive. Instead of writing a comment, extract some code in a function with a descriptive name.
 - Remove dead code.
 - Strive for consistency.
+- Avoid ephemeral variables unless they help readability (variables that are only defined and used once).
 - Remember and apply the SOLID principles (whilst remaining practical, don't use them just for architecture purity):
     - Single Responsibility Principle: A class should have one, and only one, specific job or reason to change.
     - Open/Closed Principle: Software entities should be open for extension (adding new behavior) but closed for modification (altering existing, tested code).

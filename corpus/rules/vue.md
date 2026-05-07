@@ -10,6 +10,12 @@ stack: vue
 ## Accessibility
 
 - Images that are purely decorative should have an empty alt attribute (alt="").
+- In browser tests (Playwright or Pest), always select elements using accessible locators (aria-label, aria-role, scoping by sections/elements, etc.).
+- In browser tests, NEVER use data-test or other selectors that are not relevant for the accessibility tree.
+
+## TailwindCSS
+
+- Use `size-` classes instead of `w-` and `h-` for square sizing.
 
 ## Modals
 

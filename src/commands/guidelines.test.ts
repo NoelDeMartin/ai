@@ -8,8 +8,8 @@ import GuidelinesCommand from './guidelines.ts';
 
 describe('guidelines command', () => {
     it('Detects stack', async () => {
-        copyToVirtualFilesystem('corpus/rules/laravel.md');
-        copyToVirtualFilesystem('corpus/rules/vue.md');
+        copyToVirtualFilesystem('corpus/guidelines/laravel.md');
+        copyToVirtualFilesystem('corpus/guidelines/vue.md');
 
         vol.fromJSON({
             'composer.json': JSON.stringify({

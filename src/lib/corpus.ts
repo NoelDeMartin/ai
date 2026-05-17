@@ -7,7 +7,7 @@ const CommandMetadataSchema = z.object({
     description: z.string(),
 });
 
-const RulesMetadataSchema = z.object({
+const GuidelinesMetadataSchema = z.object({
     stack: z.string().optional(),
     priority: z.number().optional(),
 });
@@ -23,9 +23,9 @@ function parseCommand(name: string, contents: string): CorpusCommand {
     };
 }
 
-function parseRule(name: string, contents: string): CorpusRules {
+function parseGuidelines(name: string, contents: string): CorpusGuidelines {
     const { data, content } = matter(contents);
-    const metadata = RulesMetadataSchema.parse(data);
+    const metadata = GuidelinesMetadataSchema.parse(data);
 
     return {
         stack: metadata.stack ? [metadata.stack] : undefined,
@@ -40,7 +40,7 @@ export interface CorpusCommand {
     prompt: string;
 }
 
-export interface CorpusRules {
+export interface CorpusGuidelines {
     stack?: string[];
     priority: number;
     prompt: string;
@@ -60,16 +60,16 @@ export async function getCommands(): Promise<CorpusCommand[]> {
     );
 }
 
-export async function getRules(): Promise<CorpusRules[]> {
-    const rulesDir = new URL('../../corpus/rules/', import.meta.url);
-    const files = await readdir(rulesDir);
-    const rules = files.map((file) => file.slice(0, -'.md'.length));
+export async function getGuidelines(): Promise<CorpusGuidelines[]> {
+    const guidelinesDir = new URL('../../corpus/guidelines/', import.meta.url);
+    const files = await readdir(guidelinesDir);
+    const guidelines = files.map((file) => file.slice(0, -'.md'.length));
 
     return Promise.all(
-        rules.map(async (rule) => {
-            const rulePath = new URL(`${rule}.md`, rulesDir);
+        guidelines.map(async (guidelinesDocument) => {
+            const guidelinesPath = new URL(`${guidelinesDocument}.md`, guidelinesDir);
 
-            return parseRule(rule, await readFile(rulePath, 'utf8'));
+            return parseGuidelines(guidelinesDocument, await readFile(guidelinesPath, 'utf8'));
         }),
     );
 }

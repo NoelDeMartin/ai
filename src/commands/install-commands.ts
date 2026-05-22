@@ -1,6 +1,6 @@
+import { installAntigravityCommand } from '@/lib/antigravity.ts';
 import { Command } from '@/lib/Command.ts';
 import { getCommands } from '@/lib/corpus.ts';
-import { installGeminiCommand } from '@/lib/gemini.ts';
 
 export default class InstallCommandsCommand extends Command {
     public override description = 'Install Agent commands';
@@ -19,7 +19,7 @@ export default class InstallCommandsCommand extends Command {
         const commands = await getCommands();
 
         for (const command of commands) {
-            await installGeminiCommand(command);
+            await installAntigravityCommand(command);
         }
     }
 }

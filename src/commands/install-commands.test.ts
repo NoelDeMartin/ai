@@ -10,7 +10,7 @@ import { createVirtualFile } from '@/testing/filesystem.ts';
 import InstallCommandsCommand from './install-commands.ts';
 
 describe('install-commands command', () => {
-    it('creates toml command', async () => {
+    it('creates antigravity skill', async () => {
         createVirtualFile(
             'corpus/commands/commit.md',
             `
@@ -24,13 +24,14 @@ describe('install-commands command', () => {
 
         await testCommand(InstallCommandsCommand);
 
-        expect(vol.readFileSync(resolve(os.homedir(), '.gemini/commands/commit.toml'), 'utf-8'))
+        expect(vol.readFileSync(resolve(os.homedir(), '.gemini/skills/commit/SKILL.md'), 'utf-8'))
             .toMatchInlineSnapshot(`
-                "description = "Create a new commit"
+                "---
+                name: commit
+                description: Create a new commit
+                ---
 
-                prompt = """
                 Create a new commit with the changes in the git staging area, following these instructions: {{args}}
-                """
                 "
             `);
     });

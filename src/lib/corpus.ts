@@ -12,18 +12,46 @@ const GuidelinesMetadataSchema = z.object({
     priority: z.number().optional(),
 });
 
-function parseCommand(name: string, contents: string): CorpusCommand {
+const SKILL_PLACEHOLDER_PATTERN = /<skills:(\w+)\s*\/>/g;
+
+function replacePlaceholders(content: string): Promise<string> {
+    return replaceSkillPlaceholders(content);
+}
+
+async function replaceSkillPlaceholders(content: string): Promise<string> {
+    const skillNames = [
+        ...new Set([...content.matchAll(SKILL_PLACEHOLDER_PATTERN)].map((match) => match[1])),
+    ];
+
+    const skillsDir = new URL('../../corpus/skills/', import.meta.url);
+    const skills = new Map(
+        await Promise.all(
+            skillNames.map(async (name) => {
+                const skillPath = new URL(`${name}.md`, skillsDir);
+
+                return [name, (await readFile(skillPath, 'utf8')).trim()] as const;
+            }),
+        ),
+    );
+
+    return content.replace(
+        SKILL_PLACEHOLDER_PATTERN,
+        (_, name) => skills.get(name) ?? `<skills:${name} />`,
+    );
+}
+
+async function parseCommand(name: string, contents: string): Promise<CorpusCommand> {
     const { data, content } = matter(contents);
     const metadata = CommandMetadataSchema.parse(data);
 
     return {
         name,
         description: metadata.description,
-        prompt: content,
+        prompt: await replacePlaceholders(content),
     };
 }
 
-function parseGuidelines(name: string, contents: string): CorpusGuidelines {
+function parseGuidelines(_: string, contents: string): CorpusGuidelines {
     const { data, content } = matter(contents);
     const metadata = GuidelinesMetadataSchema.parse(data);
 

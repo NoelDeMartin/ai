@@ -14,7 +14,7 @@ Focus on the **staged** changes (what will be committed) and check for:
 - **Scope & cohesion**: the commit is focused on a single feature or bug fix; avoid overly complicated or unrelated changes.
 - **Project conventions**: naming, structure, patterns, style, and existing abstractions are followed.
 - **Tests**: appropriate tests exist or were updated; they match the behavior change. If tests are missing, recommend concrete cases.
-- **Clean code**: better naming, smaller functions, clearer conditionals, etc.
+- **Clean code**: better naming, smaller functions, clearer conditionals, YAGNI (remove dead code), etc.
 
 ## Output format
 

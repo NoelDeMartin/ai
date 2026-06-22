@@ -9,6 +9,7 @@ function renderSkill(command: CorpusCommand): string {
         '---',
         `name: ${command.name}`,
         `description: ${command.description}`,
+        `disable-model-invocation: true`,
         '---',
         '',
         command.prompt.trim(),

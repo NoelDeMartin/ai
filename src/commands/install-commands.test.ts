@@ -29,6 +29,7 @@ describe('install-commands command', () => {
                 "---
                 name: commit
                 description: Create a new commit
+                disable-model-invocation: true
                 ---
 
                 Create a new commit with the changes in the git staging area, following these instructions: {{args}}

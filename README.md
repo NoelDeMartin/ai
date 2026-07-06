@@ -4,7 +4,7 @@ This repository contains my tooling to work with AI.
 
 ## Setup
 
-Add the following line to ~/.bashrc:
+This is mostly intended for my workflow, but if you're curious to try it out add the following line to ~/.bashrc:
 
 ```sh
 export PATH=[projects-path]/ai/bin:$PATH

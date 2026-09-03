@@ -16,6 +16,8 @@ Focus on the **staged** changes (what will be committed) and check for:
 - **Tests**: appropriate tests exist or were updated; they match the behavior change. If tests are missing, recommend concrete cases.
 - **Clean code**: better naming, smaller functions, clearer conditionals, YAGNI (remove dead code), etc.
 
+If there aren't any changes in the staging area, simply tell the user and don't review anything.
+
 ## Output format
 
 - **Verdict**: “Ready to commit” or “Not ready”.

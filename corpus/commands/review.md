@@ -28,6 +28,10 @@ If there aren't any changes in the staging area, simply tell the user and don't 
 
 If everything looks good, keep the response short: state “Ready to commit” and add at most 1–2 optional improvements (or none).
 
+## Follow ups
+
+- After the review, if the user asks you to fix something, always keep it in the working directory. Don't add it to the staging area so that the user can discern what changed after the review.
+
 # Additional instructions
 
 {{args}}

@@ -34,3 +34,5 @@ Assume the code is functionally complete, apply your improvements following thes
     - Remove helpful abstractions that improve code organization.
     - Prioritize "fewer lines" over readability (e.g., nested ternaries, dense one-liners).
     - Make the code harder to debug or extend.
+
+7. **Keep improvements in the working directory**: Don't add changes to the staging area so that the user can discern what changed after the cleanup.

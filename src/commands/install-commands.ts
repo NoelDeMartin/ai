@@ -1,4 +1,5 @@
 import { installAntigravityCommand } from '@/lib/antigravity.ts';
+import { installClaudeCommand } from '@/lib/claude.ts';
 import { Command } from '@/lib/Command.ts';
 import { getCommands } from '@/lib/corpus.ts';
 
@@ -20,6 +21,7 @@ export default class InstallCommandsCommand extends Command {
 
         for (const command of commands) {
             await installAntigravityCommand(command);
+            await installClaudeCommand(command);
         }
     }
 }

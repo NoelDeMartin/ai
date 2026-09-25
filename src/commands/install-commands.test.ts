@@ -37,6 +37,33 @@ describe('install-commands command', () => {
             `);
     });
 
+    it('creates claude skill', async () => {
+        createVirtualFile(
+            'corpus/commands/commit.md',
+            `
+                ---
+                description: Create a new commit
+                ---
+
+                Create a new commit with the changes in the git staging area, following these instructions: {{args}}
+            `,
+        );
+
+        await testCommand(InstallCommandsCommand);
+
+        expect(vol.readFileSync(resolve(os.homedir(), '.claude/skills/commit/SKILL.md'), 'utf-8'))
+            .toMatchInlineSnapshot(`
+                "---
+                name: commit
+                description: Create a new commit
+                disable-model-invocation: true
+                ---
+
+                Create a new commit with the changes in the git staging area, following these instructions: $ARGUMENTS
+                "
+            `);
+    });
+
     it('replaces skill placeholders', async () => {
         copyToVirtualFilesystem('corpus/skills/playwriter.md');
         createVirtualFile(
@@ -54,6 +81,9 @@ describe('install-commands command', () => {
 
         expect(
             vol.readFileSync(resolve(os.homedir(), '.gemini/skills/debug/SKILL.md'), 'utf-8'),
+        ).toContain(`Playwriter controls the user's Chrome browser via Playwright snippets`);
+        expect(
+            vol.readFileSync(resolve(os.homedir(), '.claude/skills/debug/SKILL.md'), 'utf-8'),
         ).toContain(`Playwriter controls the user's Chrome browser via Playwright snippets`);
     });
 });

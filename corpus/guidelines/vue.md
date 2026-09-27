@@ -12,6 +12,7 @@ stack: vue
 - Images that are purely decorative should have an empty alt attribute (alt="").
 - In browser tests (Playwright or Pest), always select elements using accessible locators (aria-label, aria-role, scoping by sections/elements, etc.).
 - In browser tests, NEVER use data-test or other selectors that are not relevant for the accessibility tree.
+- Icon-only buttons should have a title for sighted users, and an .sr-only span inside for screen readers. aria-label should be avoided because some automatic translation tools ignore these.
 
 ## TailwindCSS
 

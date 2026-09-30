@@ -11,7 +11,6 @@ This is a **review-only** task: analyze the staged changes and report your findi
 Focus on the **staged** changes (what will be committed) and check for:
 
 - **Correctness & safety**: likely bugs, edge cases, error handling, backwards compatibility, and surprising behavior changes.
-- **Scope & cohesion**: the commit is focused on a single feature or bug fix; avoid overly complicated or unrelated changes.
 - **Project conventions**: naming, structure, patterns, style, and existing abstractions are followed.
 - **Tests**: appropriate tests exist or were updated; they match the behavior change. If tests are missing, recommend concrete cases.
 - **Clean code**: better naming, smaller functions, clearer conditionals, YAGNI (remove dead code), etc.

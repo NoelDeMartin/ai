@@ -23,10 +23,12 @@ Usage:
 Commands:
   install-commands  Install Agent commands
   guidelines        Show coding guidelines for the current project
+  skills <name>     Show instructions for a skill
 
 For more info, run any command with the `--help` flag:
   $ ai install-commands --help
   $ ai guidelines --help
+  $ ai skills --help
 
 Options:
   -v, --version  Display version number

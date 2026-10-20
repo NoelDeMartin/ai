@@ -23,15 +23,8 @@ async function replaceSkillPlaceholders(content: string): Promise<string> {
         ...new Set([...content.matchAll(SKILL_PLACEHOLDER_PATTERN)].map((match) => match[1])),
     ];
 
-    const skillsDir = new URL('../../corpus/skills/', import.meta.url);
     const skills = new Map(
-        await Promise.all(
-            skillNames.map(async (name) => {
-                const skillPath = new URL(`${name}.md`, skillsDir);
-
-                return [name, (await readFile(skillPath, 'utf8')).trim()] as const;
-            }),
-        ),
+        await Promise.all(skillNames.map(async (name) => [name, await getSkill(name)] as const)),
     );
 
     return content.replace(
@@ -86,6 +79,19 @@ export async function getCommands(): Promise<CorpusCommand[]> {
             return parseCommand(command, await readFile(commandPath, 'utf8'));
         }),
     );
+}
+
+export async function getSkills(): Promise<string[]> {
+    const skillsDir = new URL('../../corpus/skills/', import.meta.url);
+    const files = await readdir(skillsDir);
+
+    return files.map((file) => file.slice(0, -'.md'.length));
+}
+
+export async function getSkill(name: string): Promise<string> {
+    const skillPath = new URL(`../../corpus/skills/${name}.md`, import.meta.url);
+
+    return (await readFile(skillPath, 'utf8')).trim();
 }
 
 export async function getGuidelines(): Promise<CorpusGuidelines[]> {

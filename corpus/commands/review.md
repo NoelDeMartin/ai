@@ -23,7 +23,6 @@ If there aren't any changes in the staging area, simply tell the user and don't 
 - **What changed (1–3 bullets)**: only the most important deltas.
 - **Must-fix issues**: only real blockers (bugs, security, broken tests, wrong scope).
 - **Nice-to-have improvements**: small, high-signal suggestions only.
-- **Suggested tests**: specific test cases (inputs/outputs/behavior), not generic advice.
 
 If everything looks good, keep the response short: state “Ready to commit” and add at most 1–2 optional improvements (or none).
 

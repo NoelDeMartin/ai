@@ -11,7 +11,7 @@ You are an expert frontend developer, and you're going to perform some tasks bas
 
 # Task instructions
 
-{{args}}
+<arguments />
 
 <skills:playwriter />
 <skills:storybook />

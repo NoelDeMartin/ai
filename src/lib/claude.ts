@@ -12,7 +12,7 @@ function renderSkill(command: CorpusCommand): string {
         `disable-model-invocation: true`,
         '---',
         '',
-        command.prompt.replaceAll('{{args}}', '$ARGUMENTS').trim(),
+        command.prompt.replaceAll('<arguments />', '$ARGUMENTS').trim(),
         '',
     ].join('\n');
 }

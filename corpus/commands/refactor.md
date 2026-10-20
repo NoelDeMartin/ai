@@ -14,7 +14,7 @@ Assume the code is functionally complete, apply your improvements following thes
 
 3. **Gather project rules**: Run exactly `ai guidelines` in the shell in order to get rules that apply to the project.
 
-4. **Special user requests (may be empty)**: {{args}}
+4. **Special user requests (may be empty)**: <arguments />
 
 5. **Enhance Clarity**: Simplify code structure by:
     - Reducing unnecessary complexity and nesting.

@@ -18,7 +18,7 @@ describe('install-commands command', () => {
                 description: Create a new commit
                 ---
 
-                Create a new commit with the changes in the git staging area, following these instructions: {{args}}
+                Create a new commit with the changes in the git staging area, following these instructions: <arguments />
             `,
         );
 
@@ -45,7 +45,7 @@ describe('install-commands command', () => {
                 description: Create a new commit
                 ---
 
-                Create a new commit with the changes in the git staging area, following these instructions: {{args}}
+                Create a new commit with the changes in the git staging area, following these instructions: <arguments />
             `,
         );
 

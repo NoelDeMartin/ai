@@ -33,4 +33,4 @@ If everything looks good, keep the response short: state “Ready to commit” a
 
 # Additional instructions
 
-{{args}}
+<arguments />

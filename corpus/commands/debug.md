@@ -9,7 +9,7 @@ You're about to help the user fix an issue.
 
 # Task instructions
 
-{{args}}
+<arguments />
 
 <skills:playwriter />
 <skills:storybook />

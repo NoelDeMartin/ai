@@ -2,6 +2,9 @@
     "name": "@noeldemartin/ai",
     "private": true,
     "type": "module",
+    "imports": {
+        "#/*": "./src/*"
+    },
     "dependencies": {
         "@clack/prompts": "^1.2.0",
         "@noeldemartin/utils": "next",

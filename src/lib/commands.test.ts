@@ -1,7 +1,7 @@
 import cac from 'cac';
 import { describe, it, expect } from 'vitest';
 
-import { copyToVirtualFilesystem } from '@/testing/filesystem.ts';
+import { copyToVirtualFilesystem } from '#/testing/filesystem.ts';
 
 import { registerCommands } from './commands.ts';
 

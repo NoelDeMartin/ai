@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { testCommand } from '@/testing/commands.ts';
-import { copyToVirtualFilesystem } from '@/testing/filesystem.ts';
+import { testCommand } from '#/testing/commands.ts';
+import { copyToVirtualFilesystem } from '#/testing/filesystem.ts';
 
 import SkillsCommand from './skills.ts';
 

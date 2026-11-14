@@ -4,8 +4,8 @@ import { resolve } from 'node:path';
 import { vol } from 'memfs';
 import { describe, expect, it } from 'vitest';
 
-import { testCommand } from '@/testing/commands.ts';
-import { copyToVirtualFilesystem, createVirtualFile } from '@/testing/filesystem.ts';
+import { testCommand } from '#/testing/commands.ts';
+import { copyToVirtualFilesystem, createVirtualFile } from '#/testing/filesystem.ts';
 
 import InstallCommandsCommand from './install-commands.ts';
 

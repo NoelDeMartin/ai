@@ -3,8 +3,8 @@ import { resolve } from 'node:path';
 
 import { arraySorted } from '@noeldemartin/utils';
 
-import { Command } from '@/lib/Command.ts';
-import { getGuidelines } from '@/lib/corpus.ts';
+import { Command } from '#/lib/Command.ts';
+import { getGuidelines } from '#/lib/corpus.ts';
 
 export default class GuidelinesCommand extends Command {
     public override description = 'Show coding guidelines for the current project';

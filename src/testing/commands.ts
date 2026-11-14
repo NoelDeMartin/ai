@@ -1,6 +1,6 @@
 import type { Constructor } from '@noeldemartin/utils';
 
-import type { Command } from '@/lib/Command.ts';
+import type { Command } from '#/lib/Command.ts';
 
 export async function testCommand<T extends Command>(
     CommandClass: Constructor<T>,

@@ -1,8 +1,8 @@
 import { vol } from 'memfs';
 import { describe, expect, it } from 'vitest';
 
-import { testCommand } from '@/testing/commands.ts';
-import { copyToVirtualFilesystem } from '@/testing/filesystem.ts';
+import { testCommand } from '#/testing/commands.ts';
+import { copyToVirtualFilesystem } from '#/testing/filesystem.ts';
 
 import GuidelinesCommand from './guidelines.ts';
 

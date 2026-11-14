@@ -1,5 +1,5 @@
-import { Command } from '@/lib/Command.ts';
-import { getSkill, getSkills } from '@/lib/corpus.ts';
+import { Command } from '#/lib/Command.ts';
+import { getSkill, getSkills } from '#/lib/corpus.ts';
 
 export default class SkillsCommand extends Command {
     public override description = 'Show instructions for a skill';

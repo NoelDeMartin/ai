@@ -3,7 +3,7 @@ import { readdir } from 'node:fs/promises';
 import type { Constructor } from '@noeldemartin/utils';
 import type { CAC } from 'cac';
 
-import type { Command } from '@/lib/Command.ts';
+import type { Command } from '#/lib/Command.ts';
 
 export async function registerCommands(cli: CAC): Promise<void> {
     const commandsDir = new URL('../commands/', import.meta.url);

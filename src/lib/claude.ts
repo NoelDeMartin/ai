@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import { resolve } from 'node:path';
 
-import type { CorpusCommand } from '@/lib/corpus.ts';
+import type { CorpusCommand } from '#/lib/corpus.ts';
 
 function renderSkill(command: CorpusCommand): string {
     return [

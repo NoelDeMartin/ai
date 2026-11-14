@@ -13,9 +13,6 @@ export default defineConfig({
         tabWidth: 4,
         sortImports: true,
     },
-    resolve: {
-        tsconfigPaths: true,
-    },
     test: {
         setupFiles: ['./src/testing/setup.ts'],
     },

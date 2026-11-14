@@ -1,7 +1,7 @@
-import { installAntigravityCommand } from '@/lib/antigravity.ts';
-import { installClaudeCommand } from '@/lib/claude.ts';
-import { Command } from '@/lib/Command.ts';
-import { getCommands } from '@/lib/corpus.ts';
+import { installAntigravityCommand } from '#/lib/antigravity.ts';
+import { installClaudeCommand } from '#/lib/claude.ts';
+import { Command } from '#/lib/Command.ts';
+import { getCommands } from '#/lib/corpus.ts';
 
 export default class InstallCommandsCommand extends Command {
     public override description = 'Install Agent commands';

@@ -41,36 +41,50 @@ export default class GuidelinesCommand extends Command {
             stack.push('vue');
         }
 
+        if (await this.usesVitest()) {
+            stack.push('vitest');
+        }
+
         return stack;
     }
 
     private async usesLaravel(): Promise<boolean> {
-        try {
-            const composerJson = await readFile(resolve(process.cwd(), './composer.json'), 'utf-8');
+        const composerJson = await this.readComposerJson();
 
-            return composerJson.includes('laravel/framework');
-        } catch {
-            return false;
-        }
+        return !!composerJson?.includes('laravel/framework');
     }
 
     private async usesPest(): Promise<boolean> {
-        try {
-            const composerJson = await readFile(resolve(process.cwd(), './composer.json'), 'utf-8');
+        const composerJson = await this.readComposerJson();
 
-            return composerJson.includes('pestphp/pest');
-        } catch {
-            return false;
-        }
+        return !!composerJson?.includes('pestphp/pest');
     }
 
     private async usesVue(): Promise<boolean> {
-        try {
-            const packageJson = await readFile(resolve(process.cwd(), './package.json'), 'utf-8');
+        const packageJson = await this.readPackageJson();
 
-            return packageJson.includes('vue');
+        return !!packageJson?.includes('vue');
+    }
+
+    private async usesVitest(): Promise<boolean> {
+        const packageJson = await this.readPackageJson();
+
+        return !!packageJson && (packageJson.includes('vitest') || packageJson.includes('vite-plus'));
+    }
+
+    private async readComposerJson(): Promise<string | null> {
+        try {
+            return await readFile(resolve(process.cwd(), './composer.json'), 'utf-8');
         } catch {
-            return false;
+            return null;
+        }
+    }
+
+    private async readPackageJson(): Promise<string | null> {
+        try {
+            return await readFile(resolve(process.cwd(), './package.json'), 'utf-8');
+        } catch {
+            return null;
         }
     }
 }

@@ -69,7 +69,9 @@ export default class GuidelinesCommand extends Command {
     private async usesVitest(): Promise<boolean> {
         const packageJson = await this.readPackageJson();
 
-        return !!packageJson && (packageJson.includes('vitest') || packageJson.includes('vite-plus'));
+        return (
+            !!packageJson && (packageJson.includes('vitest') || packageJson.includes('vite-plus'))
+        );
     }
 
     private async readComposerJson(): Promise<string | null> {

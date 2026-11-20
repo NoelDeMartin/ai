@@ -8,6 +8,7 @@ import GuidelinesCommand from './guidelines.ts';
 
 describe('guidelines command', () => {
     it('Detects stack', async () => {
+        // Arrange
         copyToVirtualFilesystem('corpus/guidelines/laravel.md');
         copyToVirtualFilesystem('corpus/guidelines/vue.md');
 
@@ -19,8 +20,10 @@ describe('guidelines command', () => {
             }),
         });
 
-        const output = await testCommand(GuidelinesCommand);
+        // Act
+        const { output } = await testCommand(GuidelinesCommand);
 
+        // Assert
         expect(output).toContain('Laravel Best Practices');
         expect(output).not.toContain('Vue Best Practices');
     });

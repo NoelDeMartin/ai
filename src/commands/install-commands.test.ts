@@ -11,6 +11,7 @@ import InstallCommandsCommand from './install-commands.ts';
 
 describe('install-commands command', () => {
     it('creates antigravity skill', async () => {
+        // Arrange
         createVirtualFile(
             'corpus/commands/commit.md',
             `
@@ -22,8 +23,10 @@ describe('install-commands command', () => {
             `,
         );
 
+        // Act
         await testCommand(InstallCommandsCommand);
 
+        // Assert
         expect(vol.readFileSync(resolve(os.homedir(), '.gemini/skills/commit/SKILL.md'), 'utf-8'))
             .toMatchInlineSnapshot(`
                 "---
@@ -38,6 +41,7 @@ describe('install-commands command', () => {
     });
 
     it('creates claude skill', async () => {
+        // Arrange
         createVirtualFile(
             'corpus/commands/commit.md',
             `
@@ -49,8 +53,10 @@ describe('install-commands command', () => {
             `,
         );
 
+        // Act
         await testCommand(InstallCommandsCommand);
 
+        // Assert
         expect(vol.readFileSync(resolve(os.homedir(), '.claude/skills/commit/SKILL.md'), 'utf-8'))
             .toMatchInlineSnapshot(`
                 "---
@@ -65,6 +71,7 @@ describe('install-commands command', () => {
     });
 
     it('replaces skill placeholders', async () => {
+        // Arrange
         copyToVirtualFilesystem('corpus/skills/playwriter.md');
         createVirtualFile(
             'corpus/commands/debug.md',
@@ -77,8 +84,10 @@ describe('install-commands command', () => {
             `,
         );
 
+        // Act
         await testCommand(InstallCommandsCommand);
 
+        // Assert
         expect(
             vol.readFileSync(resolve(os.homedir(), '.gemini/skills/debug/SKILL.md'), 'utf-8'),
         ).toContain(`Playwriter controls the user's Chrome browser via Playwright snippets`);

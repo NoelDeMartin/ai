@@ -15,9 +15,7 @@ export default class GuidelinesCommand extends Command {
         const guidelines = allGuidelines.filter(
             (guidelinesDocument) =>
                 !guidelinesDocument.stack ||
-                !guidelinesDocument.stack.some(
-                    (guidelinesStack) => !stack.includes(guidelinesStack),
-                ),
+                guidelinesDocument.stack.every((requiredStack) => stack.includes(requiredStack)),
         );
 
         for (const guidelinesDocument of arraySorted(guidelines, 'priority', 'desc')) {
@@ -27,64 +25,34 @@ export default class GuidelinesCommand extends Command {
     }
 
     private async detectProjectStack(): Promise<string[]> {
+        const [composerJson, packageJson] = await Promise.all([
+            this.readProjectFile('composer.json'),
+            this.readProjectFile('package.json'),
+        ]);
         const stack: string[] = [];
 
-        if (await this.usesLaravel()) {
+        if (composerJson?.includes('laravel/framework')) {
             stack.push('laravel');
 
-            if (await this.usesPest()) {
+            if (composerJson.includes('pestphp/pest')) {
                 stack.push('pest');
             }
         }
 
-        if (await this.usesVue()) {
+        if (packageJson?.includes('vue')) {
             stack.push('vue');
         }
 
-        if (await this.usesVitest()) {
+        if (packageJson && (packageJson.includes('vitest') || packageJson.includes('vite-plus'))) {
             stack.push('vitest');
         }
 
         return stack;
     }
 
-    private async usesLaravel(): Promise<boolean> {
-        const composerJson = await this.readComposerJson();
-
-        return !!composerJson?.includes('laravel/framework');
-    }
-
-    private async usesPest(): Promise<boolean> {
-        const composerJson = await this.readComposerJson();
-
-        return !!composerJson?.includes('pestphp/pest');
-    }
-
-    private async usesVue(): Promise<boolean> {
-        const packageJson = await this.readPackageJson();
-
-        return !!packageJson?.includes('vue');
-    }
-
-    private async usesVitest(): Promise<boolean> {
-        const packageJson = await this.readPackageJson();
-
-        return (
-            !!packageJson && (packageJson.includes('vitest') || packageJson.includes('vite-plus'))
-        );
-    }
-
-    private async readComposerJson(): Promise<string | null> {
+    private async readProjectFile(filename: string): Promise<string | null> {
         try {
-            return await readFile(resolve(process.cwd(), './composer.json'), 'utf-8');
-        } catch {
-            return null;
-        }
-    }
-
-    private async readPackageJson(): Promise<string | null> {
-        try {
-            return await readFile(resolve(process.cwd(), './package.json'), 'utf-8');
+            return await readFile(resolve(process.cwd(), filename), 'utf-8');
         } catch {
             return null;
         }

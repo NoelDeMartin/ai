@@ -12,10 +12,24 @@ const GuidelinesMetadataSchema = z.object({
     priority: z.number().optional(),
 });
 
+const CORPUS_DIR = new URL('../../corpus/', import.meta.url);
 const SKILL_PLACEHOLDER_PATTERN = /<skills:(\w+)\s*\/>/g;
 
-function replacePlaceholders(content: string): Promise<string> {
-    return replaceSkillPlaceholders(content);
+async function readCorpusFiles<T>(
+    subdirectory: string,
+    parse: (name: string, contents: string) => T | Promise<T>,
+): Promise<T[]> {
+    const dir = new URL(`${subdirectory}/`, CORPUS_DIR);
+    const files = await readdir(dir);
+
+    return Promise.all(
+        files.map(async (file) => {
+            const name = file.slice(0, -'.md'.length);
+            const contents = await readFile(new URL(file, dir), 'utf8');
+
+            return parse(name, contents);
+        }),
+    );
 }
 
 async function replaceSkillPlaceholders(content: string): Promise<string> {
@@ -40,11 +54,11 @@ async function parseCommand(name: string, contents: string): Promise<CorpusComma
     return {
         name,
         description: metadata.description,
-        prompt: await replacePlaceholders(content),
+        prompt: await replaceSkillPlaceholders(content),
     };
 }
 
-function parseGuidelines(_: string, contents: string): CorpusGuidelines {
+function parseGuidelines(contents: string): CorpusGuidelines {
     const { data, content } = matter(contents);
     const metadata = GuidelinesMetadataSchema.parse(data);
 
@@ -67,43 +81,22 @@ export interface CorpusGuidelines {
     prompt: string;
 }
 
-export async function getCommands(): Promise<CorpusCommand[]> {
-    const commandsDir = new URL('../../corpus/commands/', import.meta.url);
-    const files = await readdir(commandsDir);
-    const commands = files.map((file) => file.slice(0, -'.md'.length));
-
-    return Promise.all(
-        commands.map(async (command) => {
-            const commandPath = new URL(`${command}.md`, commandsDir);
-
-            return parseCommand(command, await readFile(commandPath, 'utf8'));
-        }),
-    );
+export function getCommands(): Promise<CorpusCommand[]> {
+    return readCorpusFiles('commands', parseCommand);
 }
 
 export async function getSkills(): Promise<string[]> {
-    const skillsDir = new URL('../../corpus/skills/', import.meta.url);
-    const files = await readdir(skillsDir);
+    const files = await readdir(new URL('skills/', CORPUS_DIR));
 
     return files.map((file) => file.slice(0, -'.md'.length));
 }
 
 export async function getSkill(name: string): Promise<string> {
-    const skillPath = new URL(`../../corpus/skills/${name}.md`, import.meta.url);
+    const skillPath = new URL(`skills/${name}.md`, CORPUS_DIR);
 
     return (await readFile(skillPath, 'utf8')).trim();
 }
 
-export async function getGuidelines(): Promise<CorpusGuidelines[]> {
-    const guidelinesDir = new URL('../../corpus/guidelines/', import.meta.url);
-    const files = await readdir(guidelinesDir);
-    const guidelines = files.map((file) => file.slice(0, -'.md'.length));
-
-    return Promise.all(
-        guidelines.map(async (guidelinesDocument) => {
-            const guidelinesPath = new URL(`${guidelinesDocument}.md`, guidelinesDir);
-
-            return parseGuidelines(guidelinesDocument, await readFile(guidelinesPath, 'utf8'));
-        }),
-    );
+export function getGuidelines(): Promise<CorpusGuidelines[]> {
+    return readCorpusFiles('guidelines', (_, contents) => parseGuidelines(contents));
 }

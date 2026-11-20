@@ -6,23 +6,24 @@ export abstract class Command {
     public description?: string;
     public arguments: string[] = [];
 
-    public abstract run(...args: string[]): Promise<void>;
+    public abstract run(...args: string[]): Promise<number | void>;
 
     public register(cli: CAC, name: string) {
         const signature = [name, ...this.arguments.map((argument) => `<${argument}>`)].join(' ');
 
-        cli.command(signature, this.description).action((...args: string[]) =>
-            this.run(...args.slice(0, this.arguments.length)),
-        );
+        cli.command(signature, this.description).action(async (...args: string[]) => {
+            process.exitCode = (await this.run(...args.slice(0, this.arguments.length))) ?? 0;
+        });
     }
 
     protected print(text: string): void {
         console.log(text);
     }
 
-    protected fail(text: string): void {
+    protected fail(text: string): number {
         console.error(text);
-        process.exitCode = 1;
+
+        return 1;
     }
 
     protected async loading(

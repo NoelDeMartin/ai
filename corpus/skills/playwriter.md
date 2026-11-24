@@ -6,13 +6,13 @@ Playwriter controls the user's Chrome browser via Playwright snippets, and runs 
 
 Always pass `-s <id>` to preserve your `state` between calls. Use single quotes (`'...'`) or heredoc for `-e` to prevent bash expansion of JS code.
 
-- **Create Session:** `vp exec playwriter session new` _(Outputs Session ID)_
-- **List Sessions:** `vp exec playwriter session list`
-- **Reset Session:** `vp exec playwriter session reset <sessionId>`
-- **Execute Code (Single line):** `vp exec playwriter -s 1 -e 'await state.page.goto("https://example.com")'`
+- **Create Session:** `vpx playwriter session new` _(Outputs Session ID)_
+- **List Sessions:** `vpx playwriter session list`
+- **Reset Session:** `vpx playwriter session reset <sessionId>`
+- **Execute Code (Single line):** `vpx playwriter -s 1 -e 'await state.page.goto("https://example.com")'`
 - **Execute Code (Multiline):**
     ```bash
-    vp exec playwriter -s 1 -e "$(cat <<'EOF'
+    vpx playwriter -s 1 -e "$(cat <<'EOF'
     const title = await state.page.title();
     console.log(title);
     EOF

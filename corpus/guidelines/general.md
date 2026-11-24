@@ -5,10 +5,10 @@ priority: 10
 # Coding Best Practices
 
 - Use early returns when possible.
-- Remove unnecessary comments and doc blocks.
-    - Leave doc blocks or comments that are important for tooling (such as linting exceptions or type annotations).
-    - Comments should only explain the why, not the how (that can be inferred from the code).
-    - Functions and variable names should be self-descriptive. Instead of writing a comment, extract some code in a function with a descriptive name.
+- Don't write comments or doc blocks, and remove existing ones that aren't strictly necessary.
+    - Keep comments that are important for tooling (such as linting exceptions or type annotations).
+    - Only add other comments in exceptional cases, when they explain important context that can't be inferred from the code (e.g. a workaround for a bug in a dependency, or a non-obvious constraint from an external system).
+    - Functions and variable names should be self-descriptive. Instead of writing a comment, extract some code in a function with a descriptive name; following the Clean Code philosophy.
 - Remove dead code.
 - Strive for consistency.
 - Avoid ephemeral variables unless they help readability (variables that are only defined and used once).

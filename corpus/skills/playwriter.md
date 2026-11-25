@@ -4,6 +4,8 @@ Playwriter controls the user's Chrome browser via Playwright snippets, and runs 
 
 ## 1. CLI Usage & Session Management
 
+If your environment runs shell commands in a sandbox, always run `vpx playwriter` commands outside the sandbox — Playwriter needs local network/CDP access to connect to Chrome's relay server.
+
 Always pass `-s <id>` to preserve your `state` between calls. Use single quotes (`'...'`) or heredoc for `-e` to prevent bash expansion of JS code.
 
 - **Create Session:** `vpx playwriter session new` _(Outputs Session ID)_
